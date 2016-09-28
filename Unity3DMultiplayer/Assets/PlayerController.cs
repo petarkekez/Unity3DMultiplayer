@@ -4,6 +4,11 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour
 {
+    public override void OnStartLocalPlayer()
+    {
+        //base.OnStartLocalPlayer();
+        GetComponent<MeshRenderer>().material.color = Color.blue;
+    }
     void Update()
     {
         if (!isLocalPlayer)
