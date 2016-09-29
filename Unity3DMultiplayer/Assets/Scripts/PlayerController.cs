@@ -8,10 +8,14 @@ public class PlayerController : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
 
+    private CompleteCameraController mainCamera;
+
     public override void OnStartLocalPlayer()
     {
         //base.OnStartLocalPlayer();
         GetComponent<MeshRenderer>().material.color = Color.blue;
+        mainCamera = FindObjectOfType<CompleteCameraController>();
+        mainCamera.player = gameObject;
     }
     void Update()
     {
@@ -24,11 +28,13 @@ public class PlayerController : NetworkBehaviour
         transform.Rotate(0, x, 0);
         transform.Translate(0, 0, z);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0)
         {
             CmdFire();
         }
+        
     }
+    
 
     [Command]
     void CmdFire()
