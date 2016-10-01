@@ -7,15 +7,19 @@ public class PlayerController : NetworkBehaviour
 {
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
-
-    private CompleteCameraController mainCamera;
+    
 
     public override void OnStartLocalPlayer()
     {
         //base.OnStartLocalPlayer();
         GetComponent<MeshRenderer>().material.color = Color.blue;
-        mainCamera = FindObjectOfType<CompleteCameraController>();
-        mainCamera.player = gameObject;
+
+        Camera camera = gameObject.GetComponentInChildren<Camera>(true);
+
+        if (camera != null)
+            camera.enabled = true;
+        //gameObject.ge
+        //var camera = gameObject.AddComponent<Camera>();
     }
     void Update()
     {

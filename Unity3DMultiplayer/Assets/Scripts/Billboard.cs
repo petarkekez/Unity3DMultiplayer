@@ -3,9 +3,13 @@ using System.Collections;
 
 public class Billboard : MonoBehaviour
 {
-
+    Camera camera = null;
     void Update()
     {
-        transform.LookAt(Camera.main.transform);
+        if(camera == null)
+            camera = FindObjectOfType<Camera>();
+
+        if(camera != null)
+            transform.LookAt(camera.transform);
     }
 }
