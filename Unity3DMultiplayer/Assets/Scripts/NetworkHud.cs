@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using UnityEngine.Networking.Types;
 using UnityEngine.UI;
 
 #if ENABLE_UNET
@@ -19,13 +20,18 @@ namespace UnityEngine.Networking
 
         // Runtime variable
         bool m_ShowServer;
+        
+        string matchHost = "eu1-mm.unet.unity3d.com";
+        //string matchHost = "mm.unet.unity3d.com";
 
         void Awake()
         {
             manager = GetComponent<NetworkManager>();
-
-            if (Application.isMobilePlatform)
-                scale = 3;
+           // manager.networkPort = Random.Range(7000,8000);
+            
+            Debug.Log("manager.networkPort - " + manager.networkPort);
+            
+            scale = Screen.width/400;
         }
 
         void Update()
@@ -158,6 +164,7 @@ namespace UnityEngine.Networking
                 if (GUI.Button(new Rect(xpos, ypos, 200 * scale, 20 * scale), "Stop (X)"))
                 {
                     manager.StopHost();
+                    enableMainCamera();
                 }
                 ypos += spacing;
             }
@@ -176,9 +183,11 @@ namespace UnityEngine.Networking
                 {
                     if (GUI.Button(new Rect(xpos, ypos, 200 * scale, 20 * scale), "Enable Match Maker (M)"))
                     {
-                        //hiddeButtons();
+                        Debug.Log("manager.StartMatchMaker - start");
                         manager.StartMatchMaker();
-                        
+                        //NetworkManager.singleton.matchMaker.SetProgramAppID((AppID)1642252);
+                        Debug.Log("manager.StartMatchMaker - end");
+
                     }
                     ypos += spacing;
                 }
@@ -213,8 +222,10 @@ namespace UnityEngine.Networking
                                 var match = manager.matches[i];
                                 if (GUI.Button(new Rect(xpos, ypos, 200 * scale, 20 * scale), "Join Match:" + match.name))
                                 {
+                                    Debug.Log("Join Match:" + match.name + " - start");
                                     manager.matchName = match.name;
                                     manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
+                                    Debug.Log("Join Match:" + match.name + " - end");
                                 }
                                 ypos += spacing;
                             }
@@ -242,7 +253,7 @@ namespace UnityEngine.Networking
                         ypos += spacing;
                         if (GUI.Button(new Rect(xpos, ypos, 100 * scale, 20 * scale), "Internet"))
                         {
-                            manager.SetMatchHost("mm.unet.unity3d.com", 443, true);
+                            manager.SetMatchHost(matchHost, 443, true);
                             m_ShowServer = false;
                         }
                         ypos += spacing;
@@ -264,6 +275,15 @@ namespace UnityEngine.Networking
                     }
                     ypos += spacing;
                 }
+            }
+        }
+
+        private void enableMainCamera()
+        {
+            var cameras = Component.FindObjectsOfType<Camera>();
+            foreach (var cameraItem in cameras)
+            {
+                cameraItem.enabled = true;
             }
         }
 
