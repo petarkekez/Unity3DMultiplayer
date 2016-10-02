@@ -20,7 +20,15 @@ public class PlayerController : NetworkBehaviour
         Camera camera = gameObject.GetComponentInChildren<Camera>(true);
 
         if (camera != null)
+        {
+            var cameras = Component.FindObjectsOfType<Camera>();
+            foreach (var cameraItem in cameras)
+            {
+                cameraItem.enabled = false;
+            }
+
             camera.enabled = true;
+        }
         //gameObject.ge
         //var camera = gameObject.AddComponent<Camera>();
     }
