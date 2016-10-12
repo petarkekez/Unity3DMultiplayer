@@ -12,6 +12,11 @@ public class PlayerController : NetworkBehaviour
     private const int fireRatePerSecond = 4;
     private TimeSpan minTimeBetweenSohots = new TimeSpan(TimeSpan.TicksPerSecond / fireRatePerSecond);
 
+    public void Start()
+        {
+        
+        }
+
     public override void OnStartLocalPlayer()
     {
         //base.OnStartLocalPlayer();

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-using UnityEngine.Networking.Types;
+//using UnityEngine.Networking.Types;
 using UnityEngine.UI;
 
 #if ENABLE_UNET
 
 namespace UnityEngine.Networking
 {
-    [AddComponentMenu("Network/NetworkManagerHUD")]
+    [AddComponentMenu("Network/NetworkManagerHUD2")]
     [RequireComponent(typeof(NetworkManager))]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class NetworkHud : MonoBehaviour
@@ -27,7 +27,7 @@ namespace UnityEngine.Networking
         void Awake()
         {
             manager = GetComponent<NetworkManager>();
-           // manager.networkPort = Random.Range(7000,8000);
+            manager.networkPort = Random.Range(7000,8000);
             
             Debug.Log("manager.networkPort - " + manager.networkPort);
             
@@ -225,6 +225,7 @@ namespace UnityEngine.Networking
                                     Debug.Log("Join Match:" + match.name + " - start");
                                     manager.matchName = match.name;
                                     manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
+                                    
                                     Debug.Log("Join Match:" + match.name + " - end");
                                 }
                                 ypos += spacing;
